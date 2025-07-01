@@ -3,8 +3,11 @@
 - Create React App(CRA)
 - Configured TailwindCSS
 - Header
+- Routing of App
 - Login Form
 - Sign Up Form
+- Form Validation
+- Use of UseRef Hook
 
 # Features
 
