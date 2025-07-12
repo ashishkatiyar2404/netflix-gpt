@@ -1,6 +1,11 @@
 import { useState, useRef } from "react";
 import { checkValidation } from "../utils/validate";
 import Header from "./Header";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   // state variables
@@ -19,6 +24,43 @@ const Login = () => {
       // fullName.current.value
     );
     setErrorMessage(validation);
+    console.log("first", validation);
+    if (validation) return;
+
+    if (!isSignInForm) {
+      // Sign Up
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode, "-----", errorMessage);
+          // ..
+        });
+    } else {
+      // sign in
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCodeSignUp = error.code;
+          const errorMessageSignUp = error.message;
+          setErrorMessage(errorCodeSignUp, "---SIgnUP--", errorMessageSignUp);
+        });
+    }
   };
 
   return (
@@ -37,7 +79,7 @@ const Login = () => {
         <h1 className="font-bold text-3xl py-4">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
-        {isSignInForm && (
+        {!isSignInForm && (
           <input
             type="text"
             // ref={fullName}
