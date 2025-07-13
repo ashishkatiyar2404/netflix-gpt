@@ -62,9 +62,8 @@ const Login = () => {
             });
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorCode, "-----", errorMessage);
+          const { code, message } = error;
+          setErrorMessage(code, "-----", message);
         });
     } else {
       // sign in
@@ -79,9 +78,8 @@ const Login = () => {
           navigate("/browse");
         })
         .catch((error) => {
-          const errorCodeSignUp = error.code;
-          const errorMessageSignUp = error.message;
-          setErrorMessage(errorCodeSignUp, "---SIgnUP--", errorMessageSignUp);
+          const { code, message } = error;
+          setErrorMessage(code, "-----", message);
         });
     }
   };
