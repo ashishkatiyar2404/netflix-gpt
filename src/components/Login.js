@@ -1,8 +1,19 @@
 import { useState, useRef } from "react";
 import { checkValidation } from "../utils/validate";
 import Header from "./Header";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/slices/userSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   // state variables
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -10,7 +21,7 @@ const Login = () => {
   // hooks
   const email = useRef(null);
   const password = useRef(null);
-  // const fullName = useRef(null);
+  const fullName = useRef(null);
 
   const handleButtonClick = () => {
     const validation = checkValidation(
@@ -19,6 +30,58 @@ const Login = () => {
       // fullName.current.value
     );
     setErrorMessage(validation);
+    if (validation) return;
+
+    if (!isSignInForm) {
+      // Sign Up
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: fullName.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/74372244?v=4",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error.errorCode);
+            });
+        })
+        .catch((error) => {
+          const { code, message } = error;
+          setErrorMessage(code, "-----", message);
+        });
+    } else {
+      // sign in
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const { code, message } = error;
+          setErrorMessage(code, "-----", message);
+        });
+    }
   };
 
   return (
@@ -37,10 +100,10 @@ const Login = () => {
         <h1 className="font-bold text-3xl py-4">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
-        {isSignInForm && (
+        {!isSignInForm && (
           <input
             type="text"
-            // ref={fullName}
+            ref={fullName}
             placeholder="Full Name"
             className="p-4 my-4 w-full bg-gray-500 rounded-lg"
           />
