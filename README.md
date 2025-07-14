@@ -16,6 +16,7 @@
 - Implemented SignOut
 - Updated Profile
 - Bug fix: Protected Routes -> if user is not logged in Redirect /browse to Login Page and vice-versa
+- Unsubscribed to the onAuthStateChanged callback
 
 # Features
 
