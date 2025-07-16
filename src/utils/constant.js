@@ -2,6 +2,15 @@
 export const GET_NOW_PLAYING_MOVIES =
   "https://api.themoviedb.org/3/movie/now_playing?page=1";
 
+export const GET_POPULAR_MOVIES =
+  "https://api.themoviedb.org/3/movie/popular?page=1";
+
+export const GET_TOP_RATED_MOVIES =
+  "https://api.themoviedb.org/3/movie/top_rated?page=1";
+
+export const GET_UP_COMING_MOVIES =
+  "https://api.themoviedb.org/3/movie/upcoming?page=1";
+
 export const API_HEADER = {
   method: "GET",
   headers: {
@@ -16,3 +25,6 @@ export const NETFLIX_LOGO_LINK =
 
 export const USER_AVATAR =
   "https://avatars.githubusercontent.com/u/74372244?v=4";
+
+export const IMG_CDN_URL = (poster_path, width = 500) =>
+  `https://image.tmdb.org/t/p/w${width}${poster_path}`;
