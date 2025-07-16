@@ -17,6 +17,17 @@
 - Updated Profile
 - Bug fix: Protected Routes -> if user is not logged in Redirect /browse to Login Page and vice-versa
 - Unsubscribed to the onAuthStateChanged callback
+- Registered for TMDB, created an app and get access token
+- Get Data from TMDB - now playing movies list API
+- Custom Hook for nowPlayingMovies and TrailerMovie
+- Create Movie slice
+- Updated the store with movies data
+- Fetch data for trailer video
+- update store with trailer video data
+- embedded the YT video and make it auto play and mute
+- Build Movie List and Movie Card
+- Made the browse page amazing with Tailwind CSS
+- Fetch movies data with custom hooks
 
 # Features
 
