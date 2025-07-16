@@ -8,7 +8,8 @@ const MainContainer = () => {
   // early return
   if (!movies) return;
 
-  const { original_title, overview, id } = movies[3];
+  const { original_title, overview, id } =
+    movies[Math.floor(Math.random() * 10)];
 
   return (
     <div className="">
