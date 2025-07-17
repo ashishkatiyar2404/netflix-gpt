@@ -28,6 +28,9 @@
 - Build Movie List and Movie Card
 - Made the browse page amazing with Tailwind CSS
 - Fetch movies data with custom hooks
+- GPT search Page
+- GPT search Bar
+- Multi-language feature in our GPT search page
 
 # Features
 
