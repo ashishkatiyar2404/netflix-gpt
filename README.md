@@ -31,6 +31,11 @@
 - GPT search Page
 - GPT search Bar
 - Multi-language feature in our GPT search page
+- Gemini Search, Gemini AI APIs
+- Memoization
+- Fetch Gemini movies suggestion from TMDB
+- Created Gemini slice added data
+- Re-use Movie list component to make suggestion container
 
 # Features
 
