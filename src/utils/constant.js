@@ -11,6 +11,10 @@ export const GET_TOP_RATED_MOVIES =
 export const GET_UP_COMING_MOVIES =
   "https://api.themoviedb.org/3/movie/upcoming?page=1";
 
+export const SEARCH_FOR_MOVIE = (movie) =>
+  `https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`;
+
+// API HEADER
 export const API_HEADER = {
   method: "GET",
   headers: {
@@ -28,3 +32,17 @@ export const USER_AVATAR =
 
 export const IMG_CDN_URL = (poster_path, width = 500) =>
   `https://image.tmdb.org/t/p/w${width}${poster_path}`;
+
+export const IMG_BACKGROUND_URL =
+  "https://assets.nflxext.com/ffe/siteui/vlv3/75b0ed49-75ab-4a63-bd45-37bc2c95cb73/web/IN-en-20250623-TRIFECTA-perspective_ae5833b7-6ce5-4e88-853e-014f38c506f1_large.jpg";
+
+// CONSTANT
+export const SUPPORTED_LANGUAGE = [
+  { identifier: "en", name: "English" },
+  { identifier: "hindi", name: "Hindi" },
+  { identifier: "spanish", name: "Spanish" },
+];
+
+// QUERY
+export const GPT_QUERY = (query) =>
+  `Act as movie Recommendation system and suggest some movies for the query${query} only give me names of 5 movies, comma separated like the example results given ahead. Example Result:Gadar,Don,Golmal,sholay,koi mil gaya.`;
