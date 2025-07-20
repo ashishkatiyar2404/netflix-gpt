@@ -27,7 +27,6 @@ const Login = () => {
     const validation = checkValidation(
       email.current.value,
       password.current.value
-      // fullName.current.value
     );
     setErrorMessage(validation);
     if (validation) return;
@@ -49,20 +48,20 @@ const Login = () => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
               dispatch(
                 addUser({
-                  uid: uid,
-                  email: email,
-                  displayName: displayName,
-                  photoURL: photoURL,
+                  uid,
+                  email,
+                  displayName,
+                  photoURL,
                 })
               );
             })
             .catch((error) => {
-              setErrorMessage(error.errorCode);
+              setErrorMessage(error.message);
             });
         })
         .catch((error) => {
           const { code, message } = error;
-          setErrorMessage(code, "-----", message);
+          setErrorMessage(`${code}: ${message}`);
         });
     } else {
       // sign in
@@ -74,22 +73,30 @@ const Login = () => {
         .then()
         .catch((error) => {
           const { code, message } = error;
-          setErrorMessage(code, "-----", message);
+          setErrorMessage(`${code}: ${message}`);
         });
     }
   };
 
   return (
-    <div>
+    <div className="relative min-h-screen">
       <Header />
-      <div className="absolute">
-        <img alt="background" src={IMG_BACKGROUND_URL} />
+      {/* Background Image */}
+      <div className="absolute inset-0 -z-10">
+        <img
+          className="w-full h-full object-cover"
+          alt="background"
+          src={IMG_BACKGROUND_URL}
+        />
+        <div className="absolute inset-0 bg-black opacity-60"></div>
       </div>
+
+      {/* Form */}
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="absolute p-12 bg-black w-3/12 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-opacity-80 rounded-lg"
+        className="absolute w-full max-w-md px-6 py-10 bg-black bg-opacity-80 rounded-lg text-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-lg"
       >
-        <h1 className="font-bold text-3xl py-4">
+        <h1 className="text-3xl font-bold mb-6 text-center">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignInForm && (
@@ -97,37 +104,38 @@ const Login = () => {
             type="text"
             ref={fullName}
             placeholder="Full Name"
-            className="p-4 my-4 w-full bg-gray-500 rounded-lg"
+            className="p-3 mb-4 w-full bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
           />
         )}
         <input
-          type="text"
+          type="email"
           ref={email}
           placeholder="Email Address"
-          className="p-4 my-4 w-full bg-gray-500 rounded-lg"
+          className="p-3 mb-4 w-full bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
         />
         <input
           type="password"
           ref={password}
           placeholder="Password"
-          className="p-4 my-4 w-full bg-gray-500 rounded-lg"
+          className="p-3 mb-4 w-full bg-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
         />
         {errorMessage && (
-          <p className="text-red-600 font-semibold">{errorMessage}</p>
+          <p className="text-red-500 font-medium mb-4">{errorMessage}</p>
         )}
+
         <button
-          className="p-4 my-6 bg-red-600 w-full rounded-lg"
-          onClick={() => handleButtonClick()}
+          onClick={handleButtonClick}
+          className="w-full py-3 bg-red-600 hover:bg-red-700 transition rounded-md font-semibold"
         >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
         <p
-          className="py-4 cursor-pointer"
+          className="mt-6 text-sm text-center text-gray-300 cursor-pointer hover:underline"
           onClick={() => setIsSignInForm(!isSignInForm)}
         >
           {isSignInForm
-            ? "New to Netflix? Sign up Now"
-            : "Already a registered User? Sign In Now"}
+            ? "New to Netflix? Sign up now"
+            : "Already have an account? Sign in now"}
         </p>
       </form>
     </div>
