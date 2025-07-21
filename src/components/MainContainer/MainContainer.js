@@ -12,7 +12,7 @@ const MainContainer = () => {
     movies[Math.floor(Math.random() * 10)];
 
   return (
-    <div>
+    <div className="pt-[30%] bg-black md:pt-0">
       <VideoTitle title={original_title} description={overview} />
       <VideoBackground movies_id={id} />
     </div>

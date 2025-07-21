@@ -44,13 +44,17 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute w-screen px-6 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
-      <img alt="netflix logo" className="w-40" src={NETFLIX_LOGO_LINK} />
+    <div className="absolute w-screen px-6 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between ">
+      <img
+        alt="netflix logo"
+        className="w-40 mx-auto md:mx-0"
+        src={NETFLIX_LOGO_LINK}
+      />
       {user && (
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-wrap items-center gap-4 md:gap-4 p-2">
           {showGptSearch && (
             <select
-              className="p-2 m-2 bg-gray-900 text-white"
+              className="p-2 bg-gray-900 text-white rounded-md text-sm"
               onChange={handleLanguageChange}
             >
               {SUPPORTED_LANGUAGE.map((lang) => (
@@ -61,20 +65,24 @@ const Header = () => {
             </select>
           )}
           <button
-            className="py-2 px-4 m-2 bg-purple-800 text-white rounded-md"
+            className="py-2 px-4 bg-purple-800 text-white rounded-md text-sm hover:bg-purple-700 transition"
             onClick={() => dispatch(toggleGptSearch())}
           >
             {showGptSearch ? "Home Page" : "GPT Search"}
           </button>
-          <img alt="user Icon" src={user?.photoURL} className="w-10 h-10" />
+
+          <img
+            alt="user Icon"
+            src={user?.photoURL}
+            className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover"
+          />
+
           <button
-            className="text-sm text-white"
+            className="text-sm text-white underline hover:text-red-300 transition"
             onClick={() => {
               signOut(auth)
                 .then(() => {})
-                .catch((error) => {
-                  navigate("/error");
-                });
+                .catch(() => navigate("/error"));
             }}
           >
             Sign Out
