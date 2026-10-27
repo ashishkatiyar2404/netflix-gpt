@@ -12,7 +12,7 @@ export const GET_UP_COMING_MOVIES =
   "https://api.themoviedb.org/3/movie/upcoming?page=1";
 
 export const SEARCH_FOR_MOVIE = (movie) =>
-  `https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`;
+  `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(movie)}&include_adult=false&language=en-US&page=1`;
 
 // API HEADER
 export const API_HEADER = {
@@ -45,4 +45,4 @@ export const SUPPORTED_LANGUAGE = [
 
 // QUERY
 export const GPT_QUERY = (query) =>
-  `Act as movie Recommendation system and suggest some movies for the query${query} only give me names of 5 movies, comma separated like the example results given ahead. Example Result:Gadar,Don,Golmal,sholay,koi mil gaya.`;
+  `You are an expert movie recommendation engine. Based on the query or mood: "${query}", suggest exactly 5 relevant, highly rated, real movie titles. Only return the exact movie titles separated by commas without numbering, bullet points, quotes, release years, or extra text. Example format: Sholay, Inception, The Dark Knight, 3 Idiots, Interstellar`;
