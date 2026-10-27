@@ -42,23 +42,25 @@ const GptSearchBar = () => {
         .split(/,|\n/)
         .map((movie) =>
           movie
-            .replace(/^\d+[\.\-\)]\s*/, "") // remove leading numbering like "1. ", "1) "
-            .replace(/["'*]/g, "")           // remove quotes, asterisks, markdown
-            .replace(/\s*\(\d{4}\)$/, "")    // remove trailing year like "(2010)"
-            .trim()
+            .replace(/^\d+[-.)]\s*/, "")
+            .replace(/["'*]/g, "")
+            .replace(/\s*\(\d{4}\)$/, "")
+            .trim(),
         )
         .filter((movie) => movie.length > 0)
         .slice(0, 5);
 
       if (gptMoviesList.length === 0) {
-        setErrorMessage("No movie suggestions found. Please try a different query.");
+        setErrorMessage(
+          "No movie suggestions found. Please try a different query.",
+        );
         setIsLoading(false);
         return;
       }
 
       // tmdb movies call for each suggested title
       const moviesPromiseArray = gptMoviesList.map((movieName) =>
-        searchMovieTmdb(movieName)
+        searchMovieTmdb(movieName),
       );
 
       const tmdbMoviesResults = await Promise.all(moviesPromiseArray);
@@ -67,11 +69,13 @@ const GptSearchBar = () => {
         addSearchGptMovies({
           tmdbMovies: tmdbMoviesResults,
           gptMoviesName: gptMoviesList,
-        })
+        }),
       );
     } catch (error) {
       console.error("GPT search error:", error);
-      setErrorMessage("Something went wrong while searching. Please try again.");
+      setErrorMessage(
+        "Something went wrong while searching. Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }
